@@ -1,0 +1,372 @@
+/* Normalize: */
+@import "~normalize.css";
+
+// ***************************************
+// Variables
+// ***************************************
+
+// Background:
+// *********************************************
+$bg-main                    : #091625;
+$bg-app                     : #0A1F2F;
+$bg-button                  : #0A2C3F;
+$bg-button-active           : #091625;
+$bg-screen-spent            : #426476;
+$bg-screen                  : #7BB8D8;
+
+$bg-keyboard-spent          : radial-gradient(circle, #cfd5ce, #7b7b7b);
+$bg-keyboard-row-1          : radial-gradient(circle, #cfd5ce, #00c441); 
+$bg-keyboard-row-2          : radial-gradient(circle, #cfd5ce, #009ec4); 
+$bg-keyboard-row-3          : radial-gradient(circle, #cfd5ce, #9e00c4); 
+
+$bg-volume                  : #434342;
+$bg-volume-selected         : #DEAB00;
+
+// Shadow:
+// *********************************************
+$button-on-shadow           : #0DB40D;
+$nutton-off-shadow          : #F50505;
+
+$keyboard-shadow-1          : #05A005;
+$keyboard-shadow-2          : #009EC4;
+$keyboard-shadow-3          : #9E00C4;
+
+$button-kit-shadow          : #7BB8D8;
+
+
+// Text Color:
+// *********************************************
+$button-color-default       : #707070;
+$button-on-color            : #0DB40D;
+$button-off-color           : #D60029;
+
+$screen-color               : #0A2C3F;
+
+$volume-icon-color          : #fff;
+
+$button-kit-color-spent     : #808080;
+$button-kit-color           : #fff;
+$button-kit-color-selected  : #7BB8D8;
+
+$keyboard-color             : #fff;
+
+
+// ***************************************
+// Mixins
+// ***************************************
+
+@mixin size ($width, $height: $width){
+  width : $width;
+  height : $height;
+}
+
+@mixin flex-center {
+  display : flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ***************************************
+// Base
+// ***************************************
+*,
+*::before,
+*::after{
+  margin:0px;
+  padding:0px;
+  box-sizing: border-box;
+}
+
+html{
+  font-size:62.5%;
+}
+html,
+body{
+    margin: 0px;
+    padding: 0px;
+
+    min-width: 100%;
+    width: 100vw;
+    max-width: 100%;
+
+    min-height: 100%;
+    height: 100vh;
+    max-width: 100%;
+
+    overflow: auto;
+}
+
+body{
+  font-size:1.6rem;
+  font-weight: 300;
+  font-family: 'Hind', sans-serif;
+}
+
+button,
+label{
+  cursor : pointer;
+}
+
+
+// ***************************************
+// Components
+// ***************************************
+.wrapper{
+  @include size(100vw, 100vh);
+  @include flex-center;
+  background-color: $bg-main;
+}
+
+.app{
+  @include size(50rem, 60rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5rem 8.5rem;
+  
+  background-color: $bg-app;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 16px -6px #000000;
+
+}
+
+
+// Header
+// ***************************************
+.app-controller{
+    @include size(100%,12rem);
+    display: block;
+}
+
+.controller-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch-button{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  //align-items: center;
+  
+  @include size(7rem, 2.8rem);
+  padding: .5rem;
+  background-color : $bg-button;
+  color: $button-color-default;
+  font-size: 1.4rem;
+  
+  border-radius: 1rem;
+  
+  &::before{
+    content :  'off';
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    transition: all .5s;
+  }
+  
+  
+  &::after{
+    @include size(55%,90%);
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    
+    content:'on';
+    background-color: $bg-button-active;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    
+    transform: translateX(0%);
+    border-radius: 1rem;
+    
+    
+    color: $button-on-color;
+    box-shadow : 0px 0px 6px -1px $button-on-shadow;
+    transition: all .5s;
+  }
+  
+}
+
+
+
+
+.switch-button-input{
+  display : none;
+}
+
+.off{
+  &::after{
+  content : 'off';
+  color: $button-off-color;
+  transform: translateX(74%);
+  box-shadow : 0px 0px 6px -1px $nutton-off-shadow;
+  }
+  
+  &::before{
+    content :  'on';
+    left: 5px;
+  }
+  
+}
+
+
+
+
+.screen{
+  display: flex;
+  padding: 1rem 0;
+  @include size(19rem,5rem);
+  background-color:$bg-screen-spent;
+  
+  border-radius: .5rem;
+  
+  &_active{
+    background-color:$bg-screen;
+  }
+  
+  &__clip,
+  &__kit{
+    @include flex-center;
+    @include size(50%,100%);
+    
+  }
+  
+  &__kit{
+    border-left: 2px solid $bg-main; 
+  }
+}
+
+
+
+.volume{
+  @include size(2.8rem);
+  @include flex-center;
+  position: relative;
+  
+  background-color: $bg-button;
+  border-radius: 100%;
+  
+  &__button{
+    @include size(100%);
+    border-radius: 100%;
+    border: none;
+    background-color: transparent;
+  }
+  &__icon{
+    color: $volume-icon-color;
+  }
+  
+  &__level{
+    position: absolute;
+    bottom: -50px;
+    
+    opacity: 0;
+    transition: opacity .5s;
+    z-index: -100;
+  }
+  
+  &__range{
+    width: 10rem;
+    
+  }
+  
+}
+
+.show-volume-level{
+  opacity: 1;
+  z-index: 10;
+}
+
+
+
+
+
+.kits{
+  height: 100%;
+  @include flex-center;
+  
+  &__item{
+    background-color: $bg-button;
+    border: none;
+    outline: none;
+    box-shadow: -1px 1px 0px 1px #051a25;
+    color: $button-kit-color-spent;
+    padding: 1.5rem  1rem;
+    margin-right: 1.5rem;
+    border-radius: .5rem;
+    
+    &_active{
+      color: $button-kit-color;
+      box-shadow: 0px 0px 7px -2px $button-kit-shadow;
+      &:active{
+      box-shadow: 0px 0px 5px -1px $button-kit-shadow;
+    }  
+    }
+    
+  }
+}
+.selected-kit{
+  color: $button-kit-color-selected;
+}
+
+
+// Main
+// ***************************************
+.main{
+  display: grid;
+  grid-template-columns: repeat(3,10rem);
+  grid-template-rows: repeat(3,10rem);
+  gap: 1.5rem;
+}
+
+.drum-pad{
+  border: none;
+  border-radius: .5rem;
+  font-size: 1.8rem;
+  outline: none;
+  color:$keyboard-color;
+  background-image: $bg-keyboard-spent;
+  box-shadow: -1px 1px 4px 2px #615f5f;
+  &:active{
+      box-shadow: 0px 0px 3px 1px #615f5f;
+    }
+  
+}
+
+.drumpad-active{
+  &:nth-child(-n+3){
+    background-image: $bg-keyboard-row-1;
+    box-shadow: 0px 0px 3px 3px $keyboard-shadow-1;
+    &:active{
+      box-shadow: 0px 0px 2px 2px $keyboard-shadow-1;
+    }
+  }
+  &:nth-child(1n+4){
+    background-image: $bg-keyboard-row-2;
+    box-shadow: 0px 0px 3px 3px $keyboard-shadow-2;
+    &:active{
+      box-shadow: 0px 0px 2px 2px $keyboard-shadow-2;
+    }
+  }
+  &:nth-child(1n+7){
+    background-image: $bg-keyboard-row-3;
+    box-shadow: 0px 0px 3px 3px $keyboard-shadow-3;
+    &:active{
+      box-shadow: 0px 0px 2px 2px $keyboard-shadow-3;
+    }
+  }
+}
+.drum-pad:active{
+    box-shadow: 0px 0px 3px 3px inherit;
+}
+
+
+
+
+
+
+
